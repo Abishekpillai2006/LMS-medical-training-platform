@@ -8,14 +8,14 @@ import { useToast } from '@/context/ToastContext'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 
 const schema = z.object({
-  email:    z.string().email('Enter a valid email'),
+  email: z.string().email('Enter a valid email'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 })
 
 const DEMO_ACCOUNTS = [
-  { role: 'Learner',  email: 'priya@medtrain.io',   color: 'bg-blue-50 border-blue-200 text-blue-700'   },
-  { role: 'Faculty',  email: 'suresh@medtrain.io',  color: 'bg-purple-50 border-purple-200 text-purple-700' },
-  { role: 'Admin',    email: 'admin@medtrain.io',   color: 'bg-slate-50 border-slate-200 text-slate-700'  },
+  { role: 'Learner', email: 'learner@demo.com', color: 'bg-blue-50 border-blue-200 text-blue-700' },
+  { role: 'Faculty', email: 'faculty@demo.com', color: 'bg-purple-50 border-purple-200 text-purple-700' },
+  { role: 'Admin', email: 'admin@demo.com', color: 'bg-slate-50 border-slate-200 text-slate-700' },
 ]
 
 export default function LoginPage() {

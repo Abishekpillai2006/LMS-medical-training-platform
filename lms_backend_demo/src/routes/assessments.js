@@ -1,4 +1,5 @@
 import express from 'express'
+import Result from '../models/Results.js'
 import Assessment from '../models/Assessment.js'
 
 const router = express.Router()
@@ -41,6 +42,18 @@ router.post('/:id/submit', async (req, res) => {
 
   const total = assessment.questions.length
   const score = Math.round((correct / total) * 100)
+
+  await Result.create({
+    learnerId: req.body.learnerId || 'u1',
+    assessmentId: assessment.id,
+    courseId: assessment.courseId,
+    score,
+    correct,
+    total,
+    passed: score >= 70,
+    answers,
+    review,
+  })
 
   res.json({
     score,
