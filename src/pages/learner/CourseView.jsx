@@ -239,13 +239,9 @@ export default function CourseView() {
 
   // Select active panel when data completes loading
   useEffect(() => {
-    if (course) {
-      if (!course.preTestPassed) {
-        setCurrentModuleId('pretest')
-      } else {
-        const nextActive = course.modules.find(m => !m.completed && !m.locked)
-        setCurrentModuleId(nextActive ? nextActive.id : course.modules[0].id)
-      }
+    if (course && course.modules && course.modules.length > 0) {
+      const nextActive = course.modules.find(m => !m.completed && !m.locked)
+      setCurrentModuleId(nextActive ? nextActive.id : course.modules[0].id)
     }
   }, [course])
 
@@ -265,15 +261,12 @@ export default function CourseView() {
 
   // Resolve current active module item
   let activeModule = null
-  let showPreTestPanel = false
   let showPostTestPanel = false
 
-  if (currentModuleId === 'pretest') {
-    showPreTestPanel = true
-  } else if (currentModuleId === 'posttest') {
+  if (currentModuleId === 'posttest') {
     showPostTestPanel = true
   } else {
-    activeModule = modules.find(m => m.id === currentModuleId) || modules[0]
+    activeModule = modules.find(m => m.id === currentModuleId) || (modules.length > 0 ? modules[0] : null)
   }
 
   // Check if posttest is unlocked (all modules are complete)
@@ -319,26 +312,6 @@ export default function CourseView() {
             </div>
 
             <div className="divide-y divide-slate-100">
-              {/* Pretest Item */}
-              <button
-                onClick={() => setCurrentModuleId('pretest')}
-                className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors text-xs font-semibold
-                  ${currentModuleId === 'pretest' ? 'bg-blue-50 text-blue-800' : 'hover:bg-slate-50 text-slate-700'}
-                `}
-              >
-                <div className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[10px]
-                  ${course.preTestPassed 
-                    ? 'bg-green-500 text-white' 
-                    : 'bg-blue-100 text-blue-700 border border-blue-200'
-                  }
-                `}>
-                  {course.preTestPassed ? '✓' : '📝'}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate">Course Pre-Test</p>
-                  <p className="text-[10px] text-slate-400 font-medium">Mandatory Entry</p>
-                </div>
-              </button>
 
               {/* Modules Items */}
               {modules.map((mod, idx) => {
@@ -406,31 +379,6 @@ export default function CourseView() {
 
         {/* Right Content Panel */}
         <div className="lg:col-span-3">
-          {/* PANEL 1: Pre-Test Block */}
-          {showPreTestPanel && (
-            <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm text-center max-w-xl mx-auto space-y-4">
-              <span className="text-6xl block">📝</span>
-              <h2 className="text-xl font-bold text-slate-800">Course Pre-Test Required</h2>
-              <p className="text-slate-500 text-sm leading-relaxed">
-                Before commencing the modules for this course, you must complete the Pre-Test. This allows us to establish your baseline emergency medical knowledge.
-              </p>
-              
-              {course.preTestPassed ? (
-                <div className="p-4 bg-green-50 border border-green-200 rounded-xl text-green-800 text-sm font-semibold inline-block">
-                  ✓ Pre-Test Passed. Module 1 is unlocked! Select Module 1 in the sidebar to begin.
-                </div>
-              ) : (
-                <div className="pt-2">
-                  <Link
-                    to={`/learner/assessment/${course.preTestId}`}
-                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md shadow-blue-600/10 transition-colors inline-block"
-                  >
-                    Start Pre-Test Assessment
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
 
           {/* PANEL 2: Post-Test Block */}
           {showPostTestPanel && (

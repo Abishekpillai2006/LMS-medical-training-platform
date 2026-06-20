@@ -75,7 +75,7 @@ export const handlers = [
   http.post(`${BASE}/assessments/:id/submit`, async ({ request }) => {
     await delay(D * 2)
     const body = await request.json()
-    const assessment = mockAssessments.find((a) => a.id === body.assessmentId || a.id === 'a1')
+    const assessment = mockAssessments.find((a) => a.id === body.assessmentId || a.id === 'a2')
     if (!assessment) return HttpResponse.json({ message: 'Not found' }, { status: 404 })
     const answers = body.answers || {}
     let correct = 0

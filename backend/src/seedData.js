@@ -444,18 +444,8 @@ export const courses = [
   }
 ]
 
-// 12 Assessments (Pre-Test and Post-Test for each of the 6 courses)
 export const assessments = [
   // BLS Assessments
-  {
-    id: 'bls-pretest', courseId: 'c1', type: 'pre-test', title: 'BLS Pre-Test Assessment', timeLimit: 20, questions: [
-      { id: 'bq1', text: 'What is the compression-to-ventilation ratio for single-rescuer adult CPR?', options: ['15:2', '30:2', '5:1', '20:2'], correct: 1 },
-      { id: 'bq2', text: 'Where do you check for a pulse on an unresponsive adult?', options: ['Radial artery', 'Femoral artery', 'Carotid artery', 'Brachial artery'], correct: 2 },
-      { id: 'bq3', text: 'What is the first step when using an Automated External Defibrillator (AED)?', options: ['Apply the pads', 'Press the shock button', 'Power on the AED', 'Clear the patient'], correct: 2 },
-      { id: 'bq4', text: 'What is the recommended chest compression depth for an adult?', options: ['At least 1 inch', 'At least 2 inches (5 cm)', 'At least 3 inches', 'Exactly 1.5 inches'], correct: 1 },
-      { id: 'bq5', text: 'What is the recommended rate of chest compressions during CPR?', options: ['80-100 per minute', '100-120 per minute', '120-140 per minute', '60-80 per minute'], correct: 1 }
-    ]
-  },
   {
     id: 'bls-posttest', courseId: 'c1', type: 'post-test', title: 'BLS Final Post-Test', timeLimit: 30, questions: [
       { id: 'bq6', text: 'How often should you switch compressors during CPR to prevent fatigue?', options: ['Every 5 minutes', 'Every 2 minutes', 'Every 1 minute', 'Only when the AED instructs'], correct: 1 },
@@ -468,15 +458,6 @@ export const assessments = [
 
   // ACLS Assessments
   {
-    id: 'acls-pretest', courseId: 'c2', type: 'pre-test', title: 'ACLS Pre-Test Assessment', timeLimit: 30, questions: [
-      { id: 'aq1', text: 'Which of the following is a shockable cardiac arrest rhythm?', options: ['Asystole', 'Pulseless Electrical Activity (PEA)', 'Ventricular Fibrillation (VF)', 'Normal Sinus Rhythm'], correct: 2 },
-      { id: 'aq2', text: 'What is the first-line medication administered during pulseless cardiac arrest?', options: ['Amiodarone', 'Atropine', 'Epinephrine', 'Adenosine'], correct: 2 },
-      { id: 'aq3', text: 'What is the first-line drug for stable narrow-complex tachycardia unresponsive to vagal maneuvers?', options: ['Atropine', 'Adenosine', 'Epinephrine', 'Amiodarone'], correct: 1 },
-      { id: 'aq4', text: 'What is the correct IV/IO dose of Epinephrine during adult cardiac arrest?', options: ['0.1 mg every 3-5 min', '1 mg every 3-5 min', '10 mg every 3-5 min', '0.5 mg every 3-5 min'], correct: 1 },
-      { id: 'aq5', text: 'Which physiological measure is used to monitor CPR quality in real-time?', options: ['Pulse oximetry', 'Blood pressure', 'Quantitative waveform capnography (PETCO2)', 'Arterial blood gas'], correct: 2 }
-    ]
-  },
-  {
     id: 'acls-posttest', courseId: 'c2', type: 'post-test', title: 'ACLS Final Post-Test', timeLimit: 30, questions: [
       { id: 'aq6', text: 'What is the recommended target temperature range for Targeted Temperature Management (TTM)?', options: ['30°C to 32°C', '32°C to 36°C', '36°C to 37°C', '34°C to 38°C'], correct: 1 },
       { id: 'aq7', text: 'What is the first-line treatment for unstable bradycardia?', options: ['Amiodarone 150 mg IV', 'Adenosine 6 mg IV', 'Atropine 1 mg IV', 'Epinephrine 1 mg IV'], correct: 2 },
@@ -487,15 +468,6 @@ export const assessments = [
   },
 
   // PALS Assessments
-  {
-    id: 'pals-pretest', courseId: 'c3', type: 'pre-test', title: 'PALS Pre-Test Assessment', timeLimit: 30, questions: [
-      { id: 'pq1', text: 'What are the three components of the Pediatric Assessment Triangle (PAT)?', options: ['Airway, Breathing, Circulation', 'Appearance, Work of Breathing, Circulation to Skin', 'AVPU, Pupils, Glucose', 'Heart rate, Respiratory rate, Blood pressure'], correct: 1 },
-      { id: 'pq2', text: 'What is the recommended fluid bolus volume for a child in compensated shock?', options: ['10 ml/kg', '20 ml/kg', '5 ml/kg', '50 ml/kg'], correct: 1 },
-      { id: 'pq3', text: 'What is the threshold heart rate for starting chest compressions in an infant with poor perfusion?', options: ['Heart rate <80 bpm', 'Heart rate <60 bpm', 'Heart rate <100 bpm', 'Heart rate <40 bpm'], correct: 1 },
-      { id: 'pq4', text: 'What is the correct epinephrine dose for pediatric resuscitation?', options: ['0.01 mg/kg IV/IO', '0.1 mg/kg IV/IO', '1 mg/kg IV/IO', '0.02 mg/kg IV/IO'], correct: 0 },
-      { id: 'pq5', text: 'What does the "T" in TICLS stand for in the Pediatric Assessment Triangle?', options: ['Temperature', 'Tone', 'Tachypnea', 'Tachycardia'], correct: 1 }
-    ]
-  },
   {
     id: 'pals-posttest', courseId: 'c3', type: 'post-test', title: 'PALS Final Post-Test', timeLimit: 30, questions: [
       { id: 'pq6', text: 'What is the correct compression-to-ventilation ratio for two-rescuer pediatric CPR?', options: ['30:2', '15:2', '3:1', '5:1'], correct: 1 },
@@ -508,15 +480,6 @@ export const assessments = [
 
   // NALS Assessments
   {
-    id: 'nals-pretest', courseId: 'c4', type: 'pre-test', title: 'NALS Pre-Test Assessment', timeLimit: 20, questions: [
-      { id: 'nq1', text: 'What are the three assessment questions asked immediately upon newborn delivery?', options: ['Term? Tone? Breathing/Crying?', 'Apgar? Color? Heart rate?', 'Fluid clear? Weight? Temperature?', 'Gestational age? SpO2? Tone?'], correct: 0 },
-      { id: 'nq2', text: 'What is the primary indicator of successful ventilation during neonatal resuscitation?', options: ['Increase in SpO2', 'Rise in heart rate', 'Bilateral breath sounds', 'Crying baby'], correct: 1 },
-      { id: 'nq3', text: 'What is the correct rate of positive pressure ventilation (PPV) for a newborn?', options: ['20-30 breaths/min', '40-60 breaths/min', '80-100 breaths/min', '10-20 breaths/min'], correct: 1 },
-      { id: 'nq4', text: 'Where should the pulse oximeter sensor be placed on a newborn?', options: ['Left foot', 'Right foot', 'Left hand', 'Right hand or wrist (pre-ductal)'], correct: 3 },
-      { id: 'nq5', text: 'When should chest compressions be initiated in a newborn?', options: ['Heart rate <100 bpm', 'Heart rate <60 bpm despite 30 seconds of effective PPV', 'Heart rate <80 bpm', 'Apgar score <3'], correct: 1 }
-    ]
-  },
-  {
     id: 'nals-posttest', courseId: 'c4', type: 'post-test', title: 'NALS Final Post-Test', timeLimit: 30, questions: [
       { id: 'nq6', text: 'What is the correct compression-to-ventilation ratio for neonatal resuscitation?', options: ['15:2', '30:2', '3:1 (90 compressions, 30 breaths)', '5:1'], correct: 2 },
       { id: 'nq7', text: 'What oxygen concentration should be used to start PPV in a term newborn?', options: ['21% (room air)', '100% oxygen', '40% oxygen', '60% oxygen'], correct: 0 },
@@ -528,15 +491,6 @@ export const assessments = [
 
   // ATLS Assessments
   {
-    id: 'atls-pretest', courseId: 'c5', type: 'pre-test', title: 'ATLS Pre-Test Assessment', timeLimit: 30, questions: [
-      { id: 'tq1', text: 'What is the correct sequence of the ATLS primary survey?', options: ['Airway, Breathing, Circulation, Disability, Exposure (ABCDE)', 'History, Physical exam, Lab tests, Imaging', 'Airway, Defibrillate, Compressions, Drugs', 'Breathing, Airway, Circulation, Pulse, Pupils'], correct: 0 },
-      { id: 'tq2', text: 'What is a primary indication for a definitive airway in a head-injured patient?', options: ['Glasgow Coma Scale (GCS) score <= 8', 'Pupil dilation', 'Scalp laceration', 'Systolic blood pressure <100 mmHg'], correct: 0 },
-      { id: 'tq3', text: 'What is the initial volume of crystalloid fluid bolus for an adult trauma patient in shock?', options: ['500 mL', '1 Liter of warm isotonic crystalloid', '2 Liters', '3 Liters'], correct: 1 },
-      { id: 'tq4', text: 'What is the clinical presentation of a tension pneumothorax?', options: ['Bilateral breath sounds, normal BP', 'Decreased breath sounds, tracheal deviation, shock', 'Rib fractures, localized bruising', 'Hemoptysis, normal breath sounds'], correct: 1 },
-      { id: 'tq5', text: 'Where should a pelvic binder be centered to stabilize a pelvic fracture?', options: ['Over the iliac crests', 'Over the greater trochanters of the femurs', 'Over the lower abdomen', 'Around the thighs'], correct: 1 }
-    ]
-  },
-  {
     id: 'atls-posttest', courseId: 'c5', type: 'post-test', title: 'ATLS Final Post-Test', timeLimit: 30, questions: [
       { id: 'tq6', text: 'What GCS score range defines a moderate head injury?', options: ['13-15', '9-12', '3-8', 'Less than 3'], correct: 1 },
       { id: 'tq7', text: 'What is the diagnostic scanning choice for detecting intra-abdominal blood in unstable trauma patients?', options: ['Abdominal MRI', 'Focused Assessment with Sonography for Trauma (FAST) scan', 'Barium swallow', 'Angiography'], correct: 1 },
@@ -547,15 +501,6 @@ export const assessments = [
   },
 
   // BLSO Assessments
-  {
-    id: 'blso-pretest', courseId: 'c6', type: 'pre-test', title: 'BLSO Pre-Test Assessment', timeLimit: 25, questions: [
-      { id: 'oq1', text: 'What is the definition of postpartum hemorrhage (PPH) in a vaginal delivery?', options: ['Blood loss >100 mL', 'Blood loss >300 mL', 'Blood loss >500 mL', 'Blood loss >1000 mL'], correct: 2 },
-      { id: 'oq2', text: 'What is the first physical intervention for postpartum hemorrhage due to uterine atony?', options: ['Bimanual compression', 'Vigorous fundal massage', 'Hysterectomy', 'Uterine packing'], correct: 1 },
-      { id: 'oq3', text: 'What is the diagnostic sign of shoulder dystocia during vaginal delivery?', options: ['Breech presentation', 'Turtle sign (retraction of the fetal head)', 'Rapid delivery of the shoulders', 'Nuchal cord'], correct: 1 },
-      { id: 'oq4', text: 'What does the "L" stand for in the HELPERR mnemonic for shoulder dystocia?', options: ['Laparotomy', 'Legs flexed and abducted (McRoberts maneuver)', 'Left lateral position', 'Lithotomy position'], correct: 1 },
-      { id: 'oq5', text: 'What modification is required during maternal cardiopulmonary resuscitation (CPR)?', options: ['Perform compressions at 80 bpm', 'Perform manual Left Uterine Displacement (LUD)', 'Remove the AED pad', 'Place the patient in a prone position'], correct: 1 }
-    ]
-  },
   {
     id: 'blso-posttest', courseId: 'c6', type: 'post-test', title: 'BLSO Final Post-Test', timeLimit: 30, questions: [
       { id: 'oq6', text: 'At what time of continuous cardiac arrest in a pregnant patient should a Perimortem Cesarean Delivery (PMCD) be performed?', options: ['After 15 minutes', 'Within 4 to 5 minutes of arrest', 'After 10 minutes', 'Only after transport to the OR'], correct: 1 },

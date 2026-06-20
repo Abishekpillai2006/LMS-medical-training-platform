@@ -63,10 +63,10 @@ router.post('/register', async (req, res) => {
           learnerId: userId,
           courseId,
           progress: 0,
-          preTestPassed: false,
+          preTestPassed: true,
           postTestPassed: false,
           completedModules: [],
-          unlockedModules: [], // Locked until Pre-Test is taken
+          unlockedModules: [],
           status: 'not_started'
         })
       })

@@ -19,17 +19,13 @@ router.get('/dashboard', protect, async (req, res) => {
         
         let nextModuleTitle = 'Not Started'
         if (course && course.modules) {
-          if (!cp.preTestPassed) {
-            nextModuleTitle = 'Pre-Test'
+          const nextMod = course.modules.find(m => !cp.completedModules.includes(m.id))
+          if (nextMod) {
+            nextModuleTitle = nextMod.title
+          } else if (!cp.postTestPassed) {
+            nextModuleTitle = 'Post-Test'
           } else {
-            const nextMod = course.modules.find(m => !cp.completedModules.includes(m.id))
-            if (nextMod) {
-              nextModuleTitle = nextMod.title
-            } else if (!cp.postTestPassed) {
-              nextModuleTitle = 'Post-Test'
-            } else {
-              nextModuleTitle = 'Completed'
-            }
+            nextModuleTitle = 'Completed'
           }
         }
 

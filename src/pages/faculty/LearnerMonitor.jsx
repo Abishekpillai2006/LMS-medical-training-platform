@@ -77,7 +77,7 @@ export default function LearnerMonitor() {
           <table className="w-full text-sm" id="learner-monitor-table">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100">
-                {['Learner', 'Department', 'Pre-Test', 'Post-Test', 'OSCE', 'Attendance', 'Certification', 'Actions'].map(h => (
+                {['Learner', 'Department', 'Post-Test', 'OSCE', 'Attendance', 'Certification', 'Actions'].map(h => (
                   <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">{h}</th>
                 ))}
               </tr>
@@ -94,9 +94,6 @@ export default function LearnerMonitor() {
                     </div>
                   </td>
                   <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{l.department}</td>
-                  <td className="px-4 py-3">
-                    <span className={`font-semibold ${l.preTestScore >= 70 ? 'text-green-600' : 'text-amber-600'}`}>{l.preTestScore}%</span>
-                  </td>
                   <td className="px-4 py-3">
                     <span className={`font-semibold ${l.postTestScore >= 70 ? 'text-green-600' : 'text-red-500'}`}>{l.postTestScore}%</span>
                   </td>

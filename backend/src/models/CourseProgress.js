@@ -5,7 +5,7 @@ const courseProgressSchema = new mongoose.Schema({
   learnerId: { type: String, required: true },
   courseId: { type: String, required: true },
   progress: { type: Number, default: 0 }, // 0 to 100
-  preTestPassed: { type: Boolean, default: false },
+  preTestPassed: { type: Boolean, default: true },
   postTestPassed: { type: Boolean, default: false },
   completedModules: [{ type: String }], // Array of completed module IDs
   unlockedModules: [{ type: String }], // Array of unlocked module IDs

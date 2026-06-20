@@ -90,11 +90,6 @@ export default function LearnerDashboard() {
                         <span className="inline-flex px-2 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded border border-blue-100 mb-1.5">{c.programCode}</span>
                         <h3 className="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">{c.courseName}</h3>
                         <p className="text-xs text-slate-500 mt-1">
-                          {c.preTestPassed ? (
-                            <span className="text-green-600 font-medium">✓ Pre-Test Passed · </span>
-                          ) : (
-                            <span className="text-amber-600 font-medium">✕ Pre-Test Pending · </span>
-                          )}
                           <span>Next: {c.nextModule}</span>
                         </p>
                       </div>

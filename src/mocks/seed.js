@@ -136,16 +136,6 @@ export const mockCertificates = [
 
 export const mockAssessments = [
   {
-    id: 'a1', courseId: 'c1', type: 'pre-test', title: 'BLS Pre-Test', timeLimit: 30,
-    questions: [
-      { id: 'q1', text: 'What is the compression-to-ventilation ratio for adult CPR?', options: ['15:2','30:2','10:2','20:2'], correct: 1 },
-      { id: 'q2', text: 'At what rate should chest compressions be performed?', options: ['60-80/min','80-100/min','100-120/min','120-140/min'], correct: 2 },
-      { id: 'q3', text: 'What does AED stand for?', options: ['Automated Emergency Defibrillator','Automated External Defibrillator','Advanced Electrical Device','Automated Electrical Defibrillator'], correct: 1 },
-      { id: 'q4', text: 'What depth should chest compressions be for an adult?', options: ['1-1.5 inches','1.5-2 inches','At least 2 inches','3 inches'], correct: 2 },
-      { id: 'q5', text: 'Which is the first step in the Chain of Survival?', options: ['Early CPR','Call for help','Early defibrillation','Recognition of cardiac arrest'], correct: 3 },
-    ],
-  },
-  {
     id: 'a2', courseId: 'c1', type: 'post-test', title: 'BLS Post-Test', timeLimit: 30,
     questions: [
       { id: 'q6',  text: 'How long should you check for a pulse before starting CPR?', options: ['5 seconds','No more than 10 seconds','15 seconds','30 seconds'], correct: 1 },

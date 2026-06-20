@@ -37,28 +37,27 @@ router.get('/:id/modules', protect, async (req, res) => {
         learnerId,
         courseId,
         progress: 0,
-        preTestPassed: false,
+        preTestPassed: true,
         postTestPassed: false,
         completedModules: [],
-        unlockedModules: [],
+        unlockedModules: course.modules?.length > 0 ? [course.modules[0].id] : [],
         status: 'not_started'
       })
     }
 
-    // Identify pre-test and post-test assessments in database
-    const preTest = await Assessment.findOne({ courseId, type: 'pre-test' }).lean()
+    // Identify post-test assessment in database
     const postTest = await Assessment.findOne({ courseId, type: 'post-test' }).lean()
 
-    // Ensure the first module is unlocked if pre-test has been passed, even if unlockedModules was empty
-    if (courseProgress.preTestPassed && courseProgress.unlockedModules.length === 0 && course.modules?.length > 0) {
+    // Ensure the first module is unlocked
+    if (courseProgress.unlockedModules.length === 0 && course.modules?.length > 0) {
       courseProgress.unlockedModules.push(course.modules[0].id)
       await courseProgress.save()
     }
 
     // Map modules and determine locks/completions dynamically per user
     const modulesMapped = (course.modules || []).map((m, index) => {
-      // Locked if pre-test not passed, OR if not in unlockedModules list
-      const isLocked = !courseProgress.preTestPassed || !courseProgress.unlockedModules.includes(m.id)
+      // Locked if not in unlockedModules list
+      const isLocked = !courseProgress.unlockedModules.includes(m.id)
       return {
         ...m,
         completed: courseProgress.completedModules.includes(m.id),
@@ -74,7 +73,7 @@ router.get('/:id/modules', protect, async (req, res) => {
       progress: courseProgress.progress,
       preTestPassed: courseProgress.preTestPassed,
       postTestPassed: courseProgress.postTestPassed,
-      preTestId: preTest?.id || `${courseId}-pretest`,
+      preTestId: null,
       postTestId: postTest?.id || `${courseId}-posttest`,
       modules: modulesMapped
     })
