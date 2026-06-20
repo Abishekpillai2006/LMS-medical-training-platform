@@ -10,8 +10,11 @@ const router = express.Router()
 router.post('/login', async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
-  if (!user || !(await user.matchPassword(password))) {
-    return res.status(401).json({ message: 'Invalid credentials' })
+  if (!user) {
+    return res.status(401).json({ message: 'Account not found. Please register or check your email.' })
+  }
+  if (!(await user.matchPassword(password))) {
+    return res.status(401).json({ message: 'Incorrect password. Please try again.' })
   }
   const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' })
   const safeUser = user.toObject()
@@ -43,34 +46,6 @@ router.post('/register', async (req, res) => {
       department,
       role: 'learner'
     })
-
-    // Auto-enroll the new learner in all 6 courses
-    const courseIds = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6']
-    await Promise.all(
-      courseIds.map(async (courseId) => {
-        // Create legacy Enrollment
-        await Enrollment.create({
-          id: 'e_' + courseId + '_' + userId,
-          learnerId: userId,
-          courseId,
-          progress: 0,
-          status: 'in_progress',
-          enrolledAt: new Date().toISOString()
-        })
-        // Create CourseProgress
-        await CourseProgress.create({
-          id: 'cp_' + courseId + '_' + userId,
-          learnerId: userId,
-          courseId,
-          progress: 0,
-          preTestPassed: true,
-          postTestPassed: false,
-          completedModules: [],
-          unlockedModules: [],
-          status: 'not_started'
-        })
-      })
-    )
 
     const safeUser = user.toObject()
     delete safeUser.password

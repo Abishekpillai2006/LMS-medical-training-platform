@@ -18,7 +18,7 @@ const password = await bcrypt.hash('MedTrain@123', 10)
 const users = [
   { 
     id: 'u1', 
-    name: 'Selvakannan M', 
+    name: 'Ronaldo', 
     email: 'learner@demo.com', 
     password, 
     role: 'learner', 
@@ -53,19 +53,13 @@ const quizzes = generateQuizzes()
 const enrollments = [
   { id: 'e_c1_u1', learnerId: 'u1', courseId: 'c1', progress: 0, status: 'in_progress', enrolledAt: new Date().toISOString() },
   { id: 'e_c2_u1', learnerId: 'u1', courseId: 'c2', progress: 0, status: 'in_progress', enrolledAt: new Date().toISOString() },
-  { id: 'e_c3_u1', learnerId: 'u1', courseId: 'c3', progress: 0, status: 'in_progress', enrolledAt: new Date().toISOString() },
-  { id: 'e_c4_u1', learnerId: 'u1', courseId: 'c4', progress: 0, status: 'in_progress', enrolledAt: new Date().toISOString() },
-  { id: 'e_c5_u1', learnerId: 'u1', courseId: 'c5', progress: 0, status: 'in_progress', enrolledAt: new Date().toISOString() },
-  { id: 'e_c6_u1', learnerId: 'u1', courseId: 'c6', progress: 0, status: 'in_progress', enrolledAt: new Date().toISOString() }
+  { id: 'e_c3_u1', learnerId: 'u1', courseId: 'c3', progress: 0, status: 'in_progress', enrolledAt: new Date().toISOString() }
 ]
 
 const courseProgresses = [
   { id: 'cp_c1_u1', learnerId: 'u1', courseId: 'c1', progress: 0, preTestPassed: true, postTestPassed: false, completedModules: [], unlockedModules: ['bls-m1'], status: 'not_started' },
   { id: 'cp_c2_u1', learnerId: 'u1', courseId: 'c2', progress: 0, preTestPassed: true, postTestPassed: false, completedModules: [], unlockedModules: ['acls-m1'], status: 'not_started' },
-  { id: 'cp_c3_u1', learnerId: 'u1', courseId: 'c3', progress: 0, preTestPassed: true, postTestPassed: false, completedModules: [], unlockedModules: ['pals-m1'], status: 'not_started' },
-  { id: 'cp_c4_u1', learnerId: 'u1', courseId: 'c4', progress: 0, preTestPassed: true, postTestPassed: false, completedModules: [], unlockedModules: ['nals-m1'], status: 'not_started' },
-  { id: 'cp_c5_u1', learnerId: 'u1', courseId: 'c5', progress: 0, preTestPassed: true, postTestPassed: false, completedModules: [], unlockedModules: ['atls-m1'], status: 'not_started' },
-  { id: 'cp_c6_u1', learnerId: 'u1', courseId: 'c6', progress: 0, preTestPassed: true, postTestPassed: false, completedModules: [], unlockedModules: ['blso-m1'], status: 'not_started' }
+  { id: 'cp_c3_u1', learnerId: 'u1', courseId: 'c3', progress: 0, preTestPassed: true, postTestPassed: false, completedModules: [], unlockedModules: ['pals-m1'], status: 'not_started' }
 ]
 
 const certificates = []

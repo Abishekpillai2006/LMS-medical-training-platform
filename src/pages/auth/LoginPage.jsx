@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,18 +12,63 @@ const schema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters'),
 })
 
+const ROLE_CONFIGS = {
+  learner: {
+    label: 'Learner',
+    icon: '🎓',
+    email: 'learner@demo.com',
+    password: 'MedTrain@123',
+    colorClass: 'border-blue-500 bg-blue-50/50 text-blue-700 shadow-sm shadow-blue-500/10',
+    hoverClass: 'hover:border-blue-200 hover:bg-blue-50/20',
+    btnClass: 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/30 focus:ring-blue-500',
+    ringClass: 'focus:ring-blue-500',
+    linkClass: 'text-blue-600 hover:text-blue-700',
+  },
+  faculty: {
+    label: 'Faculty',
+    icon: '🩺',
+    email: 'faculty@demo.com',
+    password: 'MedTrain@123',
+    colorClass: 'border-violet-500 bg-violet-50/50 text-violet-700 shadow-sm shadow-violet-500/10',
+    hoverClass: 'hover:border-violet-200 hover:bg-violet-50/20',
+    btnClass: 'bg-violet-600 hover:bg-violet-700 shadow-violet-600/30 focus:ring-violet-500',
+    ringClass: 'focus:ring-violet-500',
+    linkClass: 'text-violet-600 hover:text-violet-700',
+  },
+  admin: {
+    label: 'Admin',
+    icon: '🛡️',
+    email: 'admin@demo.com',
+    password: 'MedTrain@123',
+    colorClass: 'border-emerald-500 bg-emerald-50/50 text-emerald-700 shadow-sm shadow-emerald-500/10',
+    hoverClass: 'hover:border-emerald-200 hover:bg-emerald-50/20',
+    btnClass: 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/30 focus:ring-emerald-500',
+    ringClass: 'focus:ring-emerald-500',
+    linkClass: 'text-emerald-600 hover:text-emerald-700',
+  }
+}
+
 export default function LoginPage() {
   const { login } = useAuth()
   const toast = useToast()
   const navigate = useNavigate()
   const location = useLocation()
   const [loading, setLoading] = useState(false)
+  const [selectedRole, setSelectedRole] = useState('learner')
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
   })
 
   const from = location.state?.from?.pathname
+
+  useEffect(() => {
+    const config = ROLE_CONFIGS[selectedRole]
+    if (config) {
+      setValue('email', config.email)
+      setValue('password', config.password)
+    }
+  }, [selectedRole, setValue])
 
   const onSubmit = async (data) => {
     setLoading(true)
@@ -93,6 +138,28 @@ export default function LoginPage() {
             <h2 className="text-2xl font-bold text-slate-800 mb-1">Welcome back</h2>
             <p className="text-slate-500 text-sm mb-6">Sign in to your training portal</p>
 
+            {/* Path Selection Tabs */}
+            <div className="grid grid-cols-3 gap-2.5 mb-6">
+              {Object.entries(ROLE_CONFIGS).map(([key, role]) => {
+                const isActive = selectedRole === key
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setSelectedRole(key)}
+                    className={`flex flex-col items-center justify-center py-2.5 px-2 rounded-xl border text-center transition-all duration-200 cursor-pointer ${
+                      isActive 
+                        ? `${role.colorClass} border-2 font-semibold scale-[1.02]` 
+                        : `border-slate-200 bg-white text-slate-600 ${role.hoverClass} hover:scale-[1.01]`
+                    }`}
+                  >
+                    <span className="text-xl mb-1">{role.icon}</span>
+                    <span className="text-xs font-semibold">{role.label}</span>
+                  </button>
+                )
+              })}
+            </div>
+
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" id="login-form">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
@@ -101,7 +168,7 @@ export default function LoginPage() {
                   type="email"
                   autoComplete="email"
                   {...register('email')}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-slate-400"
+                  className={`w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 text-sm focus:outline-none focus:ring-2 ${ROLE_CONFIGS[selectedRole].ringClass} focus:border-transparent transition-all placeholder:text-slate-400`}
                   placeholder="you@medtrain.io"
                 />
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
@@ -114,25 +181,29 @@ export default function LoginPage() {
                   type="password"
                   autoComplete="current-password"
                   {...register('password')}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-slate-400"
+                  className={`w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-800 text-sm focus:outline-none focus:ring-2 ${ROLE_CONFIGS[selectedRole].ringClass} focus:border-transparent transition-all placeholder:text-slate-400`}
                   placeholder="••••••••"
                 />
                 {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+              </div>
+
+              <div className="text-xs text-slate-400 mt-1 italic">
+                Demo credentials automatically prefilled for testing.
               </div>
 
               <button
                 id="login-submit"
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-70 text-white font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-sm shadow-blue-600/30"
+                className={`w-full py-3 disabled:opacity-70 text-white font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-sm ${ROLE_CONFIGS[selectedRole].btnClass}`}
               >
-                {loading ? <><LoadingSpinner size="sm" color="text-white" /> Signing in…</> : 'Sign In'}
+                {loading ? <><LoadingSpinner size="sm" color="text-white" /> Signing in…</> : `Sign In as ${ROLE_CONFIGS[selectedRole].label}`}
               </button>
             </form>
 
             <div className="mt-6 pt-5 border-t border-slate-100 text-center text-sm">
               <span className="text-slate-500">Don't have an account? </span>
-              <Link to="/register" className="text-blue-600 hover:underline font-semibold" id="register-link">
+              <Link to="/register" className={`hover:underline font-semibold ${ROLE_CONFIGS[selectedRole].linkClass}`} id="register-link">
                 Create Account
               </Link>
             </div>

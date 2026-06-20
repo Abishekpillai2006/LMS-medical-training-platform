@@ -2,7 +2,7 @@
 
 export const mockUsers = [
   // Learners
-  { id: 'u1', name: 'Priya Sharma',     email: 'priya@medtrain.io',   role: 'learner',  department: 'Emergency Medicine', status: 'active', lastLogin: '2026-06-17', avatar: null },
+  { id: 'u1', name: 'Ronaldo',          email: 'priya@medtrain.io',   role: 'learner',  department: 'Emergency Medicine', status: 'active', lastLogin: '2026-06-17', avatar: null },
   { id: 'u2', name: 'Arjun Mehta',      email: 'arjun@medtrain.io',   role: 'learner',  department: 'ICU',                status: 'active', lastLogin: '2026-06-16', avatar: null },
   { id: 'u3', name: 'Kavya Nair',       email: 'kavya@medtrain.io',   role: 'learner',  department: 'Pediatrics',         status: 'active', lastLogin: '2026-06-15', avatar: null },
   { id: 'u4', name: 'Rohit Gupta',      email: 'rohit@medtrain.io',   role: 'learner',  department: 'Anesthesiology',     status: 'active', lastLogin: '2026-06-14', avatar: null },

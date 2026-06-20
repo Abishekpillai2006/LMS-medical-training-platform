@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '@/lib/axios'
 import { useAuth } from '@/context/AuthContext'
+import { useToast } from '@/context/ToastContext'
 import { ProgressBar } from '@/components/shared/ProgressBar'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
@@ -28,16 +29,29 @@ function StatCard({ icon, label, value, sub, color = 'blue' }) {
 
 export default function LearnerDashboard() {
   const { user } = useAuth()
+  const queryClient = useQueryClient()
+  const toast = useToast()
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['learner-dashboard'],
     queryFn: () => api.get('/learner/dashboard').then(r => r.data),
   })
 
+  const enrollMutation = useMutation({
+    mutationFn: (courseId) => api.post('/learner/enroll', { courseId }).then(r => r.data),
+    onSuccess: () => {
+      toast.success('Enrolled in course successfully!')
+      queryClient.invalidateQueries({ queryKey: ['learner-dashboard'] })
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || 'Failed to enroll in course')
+    }
+  })
+
   if (isLoading) return <div className="flex items-center justify-center h-64"><LoadingSpinner size="lg" /></div>
   if (error) return <div className="text-red-500 text-sm text-center py-16">Failed to load dashboard. Please sign in again.</div>
 
-  const { courses = [], simulations = [], certificates = [], notifications = [] } = data || {}
+  const { courses = [], availableCourses = [], simulations = [], certificates = [], notifications = [] } = data || {}
 
   const activeCourses = courses.filter(c => c.status !== 'completed')
   const completedCourses = courses.filter(c => c.status === 'completed')
@@ -103,6 +117,42 @@ export default function LearnerDashboard() {
               </div>
             )}
           </div>
+
+          {/* Available Courses */}
+          {availableCourses.length > 0 && (
+            <div className="space-y-3">
+              <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <span>➕</span> Available Courses ({availableCourses.length})
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {availableCourses.map((c) => (
+                  <div
+                    key={c.id}
+                    className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-between hover:border-blue-200 hover:shadow-md transition-all group"
+                  >
+                    <div>
+                      <span className="inline-flex px-2 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded border border-blue-100 mb-2">{c.programCode}</span>
+                      <h3 className="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">{c.name}</h3>
+                      <p className="text-xs text-slate-500 mt-2 line-clamp-2">{c.description}</p>
+                    </div>
+                    
+                    <button
+                      type="button"
+                      disabled={enrollMutation.isPending}
+                      onClick={() => enrollMutation.mutate(c.id)}
+                      className="mt-4 w-full py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      {enrollMutation.isPending && enrollMutation.variables === c.id ? (
+                        <LoadingSpinner size="sm" color="text-white" />
+                      ) : (
+                        <>➕ Enroll Course</>
+                      )}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Completed Courses */}
           {completedCourses.length > 0 && (
