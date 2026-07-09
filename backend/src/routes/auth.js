@@ -8,26 +8,31 @@ import CourseProgress from '../models/CourseProgress.js'
 const router = express.Router()
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body
-  const user = await User.findOne({ email })
-  if (!user) {
-    return res.status(401).json({ message: 'Account not found. Please register or check your email.' })
+  try {
+    const { email, password } = req.body
+    const user = await User.findOne({ email })
+    if (!user) {
+      return res.status(401).json({ message: 'Account not found. Please register or check your email.' })
+    }
+    if (user.status === 'inactive') {
+      return res.status(403).json({ message: 'Your account has been deactivated. Please contact support.' })
+    }
+    if (user.status === 'pending') {
+      return res.status(403).json({ message: 'Your registration is pending admin approval.' })
+    }
+    if (!(await user.matchPassword(password))) {
+      return res.status(401).json({ message: 'Incorrect password. Please try again.' })
+    }
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' })
+    const safeUser = user.toObject()
+    delete safeUser.password
+    delete safeUser._id
+    delete safeUser.__v
+    res.json({ token, user: safeUser })
+  } catch (error) {
+    console.error('Login error:', error)
+    res.status(500).json({ message: 'Server error during login' })
   }
-  if (user.status === 'inactive') {
-    return res.status(403).json({ message: 'Your account has been deactivated. Please contact support.' })
-  }
-  if (user.status === 'pending') {
-    return res.status(403).json({ message: 'Your registration is pending admin approval.' })
-  }
-  if (!(await user.matchPassword(password))) {
-    return res.status(401).json({ message: 'Incorrect password. Please try again.' })
-  }
-  const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' })
-  const safeUser = user.toObject()
-  delete safeUser.password
-  delete safeUser._id
-  delete safeUser.__v
-  res.json({ token, user: safeUser })
 })
 
 router.post('/register', async (req, res) => {

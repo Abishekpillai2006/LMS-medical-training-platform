@@ -1,6 +1,8 @@
 import 'dotenv/config' // Hot-reload trigger comment
 import express from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
 import { connectDB } from './config/db.js'
 import authRoutes from './routes/auth.js'
 import learnerRoutes from './routes/learner.js'
@@ -14,14 +16,27 @@ import osceRoutes from './routes/osce.js'
 
 const app = express()
 
+app.use(helmet())
+app.disable('x-powered-by')
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Too many requests, please try again later.'
+})
+
 app.use(cors({
-    origin: [
-        process.env.FRONTEND_URL || 'http://localhost:5173',
-        'http://localhost:5173',
-        'http://localhost:5174'
-    ],
+    origin: process.env.NODE_ENV === 'production' 
+      ? process.env.FRONTEND_URL 
+      : [
+          process.env.FRONTEND_URL || 'http://localhost:5173',
+          'http://localhost:5173',
+          'http://localhost:5174'
+      ],
     credentials: true
 }))
+
+app.use('/api/', apiLimiter)
 
 app.use(express.json({ limit: '2mb' }))
 

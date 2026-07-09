@@ -1,7 +1,17 @@
 import axios from 'axios'
 
+const isProd = import.meta.env.PROD
+let baseURL = import.meta.env.VITE_API_URL
+
+if (isProd && !baseURL) {
+  console.error("VITE_API_URL is missing in production environment variables!")
+}
+if (!isProd && !baseURL) {
+  baseURL = 'http://localhost:8000/api'
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+  baseURL,
   timeout: 15000,
   headers: { 'Content-Type': 'application/json' },
 })
